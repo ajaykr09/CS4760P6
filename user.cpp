@@ -266,21 +266,21 @@ int main(int argc, char** argv) {
         }
 
         if(msgrcv(msgqid, &rcvbuf, sizeof(MessageBuffer), getpid(), 0) == -1) {
-            perror("failed to receive message from parent\n");
+            perror("Failed to receive message\n");
             exit(1);
         }
         if(rcvbuf.msgCode == MSG_BLOCKED){
             if(msgrcv(msgqid, &rcvbuf, sizeof(MessageBuffer), getpid(), 0) == -1) {
-                perror("failed to receive message from parent\n");
+                perror("Failed to receive message\n");
                 exit(1);
             }
             if(rcvbuf.msgCode != MSG_GRANTED){
-                perror("user.cpp: child process unblocked but msgCode was not MSG_GRANTED");
+                perror("Child process unblocked but msgCode was not MSG_GRANTED");
                 exit(1);
             }
         }
     }
     shmdt(shm_clock);
-    printf("%d: Child is terminating...\n",getpid());
+    printf("%d: Terminating Child\n",getpid());
     return EXIT_SUCCESS;
 }
